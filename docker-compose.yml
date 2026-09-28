@@ -1,0 +1,17 @@
+services:
+  python-dev:
+    build:
+      context: .
+      dockerfile: dev/Dockerfile
+      args:
+        DEV_UID: ${DEV_UID:-1000}
+        DEV_GID: ${DEV_GID:-1000}
+        DEV_USERNAME: ${DEV_USERNAME:-developer}
+    working_dir: /workspace
+    environment:
+      PYTHONPATH: /workspace/src/dryer-sensor/python/src
+    volumes:
+      - ./:/workspace
+      - ./data:/data
+    stdin_open: true
+    tty: true
