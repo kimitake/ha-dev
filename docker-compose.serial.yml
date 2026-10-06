@@ -1,0 +1,8 @@
+services:
+  python-dev:
+    volumes:
+      - /dev:/host-dev
+    device_cgroup_rules:
+      - 'c 188:* rw'
+    group_add:
+      - "${DEV_SERIAL_GID:?Run ./setup.sh first to generate .env}"
