@@ -16,6 +16,8 @@ RUN apt-get update \
     && groupadd --gid "${DEV_GID}" "${DEV_USERNAME}" \
     && useradd --uid "${DEV_UID}" --gid "${DEV_GID}" \
         --create-home --shell /bin/bash "${DEV_USERNAME}" \
+    && mkdir -p "/home/${DEV_USERNAME}/.platformio" \
+    && chown "${DEV_UID}:${DEV_GID}" "/home/${DEV_USERNAME}/.platformio" \
     && printf '%s ALL=(ALL) NOPASSWD:ALL\n' "${DEV_USERNAME}" \
         > "/etc/sudoers.d/${DEV_USERNAME}" \
     && chmod 0440 "/etc/sudoers.d/${DEV_USERNAME}"

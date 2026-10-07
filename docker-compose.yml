@@ -13,5 +13,9 @@ services:
     volumes:
       - ./:/workspace
       - ./data:/data
+      - platformio-data:/home/${DEV_USERNAME:-developer}/.platformio
     stdin_open: true
     tty: true
+
+volumes:
+  platformio-data:

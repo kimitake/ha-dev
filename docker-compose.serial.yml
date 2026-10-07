@@ -1,8 +1,6 @@
 services:
   python-dev:
-    volumes:
-      - /dev:/host-dev
-    device_cgroup_rules:
-      - 'c 188:* rw'
+    devices:
+      - "${DEV_SERIAL_DEVICE:-/dev/ttyUSB0}:/dev/ttyUSB0"
     group_add:
       - "${DEV_SERIAL_GID:?Run ./setup.sh first to generate .env}"
