@@ -10,12 +10,16 @@ services:
     working_dir: /workspace
     environment:
       PYTHONPATH: /workspace/src/dryer-sensor/python/src
+    env_file:
+      - .env
     volumes:
       - ./:/workspace
       - ./data:/data
       - platformio-data:/home/${DEV_USERNAME:-developer}/.platformio
+      - vscode-server:/home/${DEV_USERNAME:-developer}/.vscode-server
     stdin_open: true
     tty: true
 
 volumes:
   platformio-data:
+  vscode-server:

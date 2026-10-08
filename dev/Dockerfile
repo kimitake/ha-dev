@@ -11,13 +11,20 @@ COPY src/dryer-sensor/python/requirements-dev.txt /tmp/requirements-dev.txt
 RUN python -m pip install --no-cache-dir -r /tmp/requirements-dev.txt
 
 RUN apt-get update \
-    && apt-get install --no-install-recommends -y sudo \
+    && apt-get install --no-install-recommends -y \
+        sudo \
+        git \
+        vim \
+        curl \
+        wget \
     && rm -rf /var/lib/apt/lists/* \
     && groupadd --gid "${DEV_GID}" "${DEV_USERNAME}" \
     && useradd --uid "${DEV_UID}" --gid "${DEV_GID}" \
         --create-home --shell /bin/bash "${DEV_USERNAME}" \
     && mkdir -p "/home/${DEV_USERNAME}/.platformio" \
     && chown "${DEV_UID}:${DEV_GID}" "/home/${DEV_USERNAME}/.platformio" \
+    && mkdir -p "/home/${DEV_USERNAME}/.vscode-server" \
+    && chown "${DEV_UID}:${DEV_GID}" "/home/${DEV_USERNAME}/.vscode-server" \
     && printf '%s ALL=(ALL) NOPASSWD:ALL\n' "${DEV_USERNAME}" \
         > "/etc/sudoers.d/${DEV_USERNAME}" \
     && chmod 0440 "/etc/sudoers.d/${DEV_USERNAME}"
