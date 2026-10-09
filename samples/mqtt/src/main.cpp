@@ -1,28 +1,13 @@
 #include <Arduino.h>
 #include <WiFi.h>
-#include <WiFiManager.h>
+#include <HADeviceConfig.h>
 #include <PubSubClient.h>
 
 WiFiClient wifiClient;
 PubSubClient mqttClient(wifiClient);
 
-void connectWiFi() {
-    Serial.println("Starting WiFiManager...");
+HADeviceConfig deviceConfig;
 
-    WiFiManager wm;
-
-    Serial.println("Before autoConnect");
-
-    if (!wm.autoConnect("Atom-Lite-Setup")) {
-        Serial.println("Wi-Fi configuration failed");
-        ESP.restart();
-    }
-
-    Serial.println("After autoConnect");
-    Serial.println("Wi-Fi connected!");
-    Serial.print("IP address: ");
-    Serial.println(WiFi.localIP());
-}
 void connectMQTT() {
     Serial.println("Connecting to MQTT...");
 
@@ -43,7 +28,10 @@ void setup() {
     Serial.begin(115200);
     delay(1000);
 
-    connectWiFi();
+    if (!deviceConfig.connectWiFi("Atom-Lite-Setup")) {
+        ESP.restart();
+    }
+
     connectMQTT();
 }
 
